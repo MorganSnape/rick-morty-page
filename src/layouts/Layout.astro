@@ -4,6 +4,7 @@ interface Props {
 }
 
 const { title } = Astro.props;
+import BarNav from "../components/BarNav.astro";
 ---
 
 <!doctype html>
@@ -17,6 +18,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<BarNav/>
 		<slot />
 	</body>
 </html>
@@ -36,6 +38,7 @@ const { title } = Astro.props;
 		font-family: system-ui, sans-serif;
 		background: #13151a;
 		background-size: 224px;
+		color: #FBFBFB;
 	}
 	code {
 		font-family:

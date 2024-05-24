@@ -1,60 +1,130 @@
 ---
-import Personajes from './Personajes.astro';
+import type { Species } from "../types/api";
+import type { Gender } from "../types/api";
+import type { ShortedLocation } from "../types/api";
+import { Status } from "../types/api";
+
 interface Props {
-	id: number;
-	title: string;
-	href: string;
-	name: string;
-	body: string;
-	img: string;
-	status: string;
-	gender: string;
-	species: string;
+  id: number;
+  name: string;
+  status: Status;
+  species: Species;
+  gender: Gender;
+  image: string;
+  url: string;
+  location: ShortedLocation;
+  origin: ShortedLocation;
 }
 
-const { href, title, body, img } = Astro.props;
+const { id, name, status, species, gender, image, url, location, origin } =
+  Astro.props;
+
+const statusIconMapper = (status: Status) => {
+  let iconUrl: string;
+
+  switch (status) {
+    case Status.Alive:
+      iconUrl = "/public/images/Alive.png";
+      break;
+
+    case Status.Dead:
+      iconUrl = "/public/images/Dead.png";
+      break;
+
+    default:
+      iconUrl = "/public/images/Unknow.png";
+      break;
+  }
+
+  return iconUrl;
+};
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<h2>
-			{title}
-			<span>
-				<img src={img} src="" alt="">
-			</span>
-		</h2>
-		<p>
-			<Personajes/>
-			{body}
-		</p>
-	</a>
-</li>
-<style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 1px;
-		background-color: #fdf5a3;
-		background-size: 400%;
-		border-radius: 7px;
-	}
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #fdf5a3;
+<article>
+  <img src={image} alt="Imagen" />
+  <div id="text-container">
+    <div id="nombre-estado">
+      <h1>{name}</h1>
+      <span id="estado-especie">
+        <img src={statusIconMapper(status)} id="icon" />
+        {status} - {species}
+      </span>
+    </div>
+    <div class="specific-details">
+      <span class="text">Ultima locación conocida</span>
+      <a href={location.url}>{location.name}</a>
+    </div>
+    <div class="specific-details">
+      <span class="text">Visto por primera vez</span>
+      <a href={location.url}>{location.name}</a>
+    </div>
+  </div>
+</article>
 
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-	}
+<style>
+  article {
+    display: flex;
+    flex-direction: row;
+    background-color: #70707067;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 220px;
+    width: 600px;
+  }
+  article:hover {
+    -webkit-box-shadow: 0px 0px 27px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0px 0px 27px -12px rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 27px -12px rgba(255, 255, 255, 1);
+    background-color: #c4b7b767;
+  }
+  img {
+    height: 100%;
+    filter: grayscale(100%) sepia(20%) opacity(90%);
+  }
+  article:hover img {
+    filter: grayscale(0%) opacity(100%);
+  }
+
+  #text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+
+  #estado-especie {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    font-weight: 700;
+    align-items: center;
+  }
+
+  #icon {
+    height: 20px;
+    -webkit-box-shadow: 0px 0px 27px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0px 0px 27px -12px rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 27px -12px rgba(255, 255, 255, 1);
+  }
+
+  #nombre-estado {
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    justify-content: flex-start;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 30px;
+  }
+  .text {
+    margin-top: 4px;
+    color: #949494;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .specific-details {
+    display: flex;
+    flex-direction: column;
+  }
 </style>

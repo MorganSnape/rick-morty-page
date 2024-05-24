@@ -1,13 +1,54 @@
 ---
-import BarNav from "../components/BarNav.astro";
-import Layout from "../layouts/Layout.astro"
+import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
----
 
+import { getAllCharactersByPage } from "../services/rickMortyApi.ts";
+
+const characters = await getAllCharactersByPage();
+---
 
 <Layout title="Personajes">
   <main>
-    <BarNav/>
-    <Card/>
+    <div id="cards-container">
+      {
+        characters.map(
+          ({
+            id,
+            name,
+            status,
+            species,
+            gender,
+            image,
+            url,
+            location,
+            origin,
+          }) => (
+            <Card
+              id={id}
+              name={name}
+              status={status}
+              species={species}
+              gender={gender}
+              image={image}
+              url={url}
+              location={location}
+              origin={origin}
+            />
+          )
+        )
+      }
+    </div>
   </main>
 </Layout>
+<style>
+  
+  #cards-container{
+    display: grid;
+    grid-template-columns: repeat(2, 600px);
+    justify-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 60px;
+    margin-bottom: 30px
+  }
+</style>

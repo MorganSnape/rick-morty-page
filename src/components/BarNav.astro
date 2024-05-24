@@ -1,28 +1,31 @@
 ---
 
 ---
-<div id="nav-container">
-  <a href="/"><img src="/images/file.png" alt="Icono" class="h-12 " ></a>
-  <ul>
-    <li>
-      <a href="/personajes">Personajes</a>
-    </li>
-    <li>
-      <a href="">Espidios</a>
-    </li>
-    <li>
-      <a href="">Locaciones</a>
-    </li>
-  </ul>
-</div>
+<nav>
+  <div id="nav-container">
+    <a href="/"><img src="/images/file.png" alt="Icono" class="h-12 ml-4 " ></a>
+    <ul>
+      <li>
+        <a href="/personajes">Personajes</a>
+      </li>
+      <li>
+        <a href="">Espidios</a>
+      </li>
+      <li>
+        <a href="">Locaciones</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <style>
  #nav-container{
   display: flex;
   flex-direction: row;
-  background-color: #7f3e22;
+  background-color: #010f01;
   justify-content: space-between;
   align-items: center;
+  border-bottom: solid white 4px;
   }
 
   ul{
@@ -39,7 +42,10 @@
   }
   li:hover{
     padding: 20px;
-    background-color: #b48861;
+    background-color: #308941;
+    -webkit-box-shadow: 0px 0px 88px 14px rgba(32,162,39,1);
+    -moz-box-shadow: 0px 0px 88px 14px rgba(32,162,39,1);
+    box-shadow: 0px 0px 88px 14px rgba(32,162,39,1);
   }
 
 </style>
