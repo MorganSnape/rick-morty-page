@@ -7,7 +7,8 @@ interface Props {
 
 const { url, disable, type } = Astro.props;
 ---
-
+<!-- Primero pregunta es disable ? si es true muestra la etiqueta spam si es false muestra el ancore
+Luego de esa pregunta, valida, es type LEFT si es true muestra el primer svg y si es false muestra la segunda opción -->
 {
   disable ? (
     <span class="selectable disable">
