@@ -12,8 +12,8 @@ export type RickMortyEpisodeResponse = RickMortyResponse<Episode>;
 export type Info = {
   count: number;
   pages: number;
-  next:  string;
-  prev:  null;
+  next:  string | null;
+  prev:  string | null;
 }
 
 export type Character = {

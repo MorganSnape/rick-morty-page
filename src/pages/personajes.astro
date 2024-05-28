@@ -1,14 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import Paginador from "../components/Paginador/Paginador.astro";
 
 import { getAllCharactersByPage } from "../services/rickMortyApi.ts";
+import { number, string } from "astro/zod";
 
 const characters = await getAllCharactersByPage();
+
+const urlGen = (page:number)=>{
+  return `/personajes?page=${page}`
+}
 ---
 
 <Layout title="Personajes">
   <main>
+    <Paginador current={1} maxPage={42} sizeCenterLinks={3} urlGen={urlGen}/>
     <div id="cards-container">
       {
         characters.map(

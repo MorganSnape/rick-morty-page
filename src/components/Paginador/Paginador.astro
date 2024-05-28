@@ -1,0 +1,172 @@
+---
+import PaginadorArrow from './PaginadorArrow.astro'
+
+interface Props {
+  current: number;
+  maxPage: number;
+  sizeCenterLinks?: number;
+  urlGen: (page: number) => string;
+}
+
+function computeCenterLinks(
+  current: number,
+  size: number,
+  max: number
+): number[][] {
+  let arr1: number[] = [];
+  let arr2: number[] = [];
+
+  for (let i = 1; i <= size; i++) {
+    const resta = current - i;
+    arr1.unshift(resta);
+  }
+
+  arr1 = arr1.filter((page) => page >= 1);
+
+  for (let i = 1; i <= size; i++) {
+    const suma = current + i;
+    arr2.push(suma);
+  }
+
+  console.log(arr2);
+  arr2 = arr2.filter((page) => page <= max);
+
+  return [arr1, arr2];
+}
+
+const { current, maxPage, sizeCenterLinks, urlGen } = Astro.props;
+
+const centerLinks = sizeCenterLinks || 1;
+
+const [prevPages, afterPages] = computeCenterLinks(
+  current,
+  centerLinks,
+  maxPage
+);
+
+const isActiveFirstPage: boolean = current - centerLinks > 1;
+const isActiveFirstSeparator: boolean = current - centerLinks > 2;
+
+const isActiveAfterPages: boolean = maxPage - current > centerLinks;
+const isActiveLastSeparator: boolean = maxPage - current > centerLinks + 1;
+
+const isFirstPage = current === 1;
+const isLastPage = current === maxPage;
+
+const prev = current - 1;
+const next = current + 1;
+---
+
+<div class="paginador-container">
+  <PaginadorArrow url={urlGen(prev)} disable={isFirstPage} type='LEFT' />
+
+  {
+    isActiveFirstPage && (
+      <a href={urlGen(1)} class="selectable">
+        1
+      </a>
+    )
+  }
+  {
+    isActiveFirstSeparator && (
+      <svg
+        class="icon separador"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="#ffffff"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M8 12l0 .01" />
+        <path d="M12 12l0 .01" />
+        <path d="M16 12l0 .01" />
+      </svg>
+    )
+  }
+  <div class="center">
+    {
+      prevPages.map((page) => {
+        return (
+          <a href={urlGen(page)} class="selectable">
+            {page}
+          </a>
+        );
+      })
+    }
+    <span class="active">{current}</span>
+    {
+      afterPages.map((page) => {
+        return (
+          <a href={urlGen(page)} class="selectable">
+            {page}
+          </a>
+        );
+      })
+    }
+  </div>
+  {
+    isActiveLastSeparator && (
+      <svg
+        class="icon separador"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="#ffffff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M8 12l0 .01" />
+        <path d="M12 12l0 .01" />
+        <path d="M16 12l0 .01" />
+      </svg>
+    )
+  }
+  {
+    isActiveAfterPages && (
+      <a href={urlGen(maxPage)} class="selectable">
+        {maxPage}
+      </a>
+    )
+  }
+
+<PaginadorArrow url={urlGen(next)} disable={isLastPage} type='RIGHT' />
+
+</div>
+
+<style>
+  .paginador-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .center {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+  a,.active {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .separador {
+    height: 40px;
+    width: 40px;
+  }
+
+  .selectable:hover {
+    background-color: #444444;
+  }
+
+  .active {
+    background: #308941;
+  }
+</style>
