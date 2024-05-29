@@ -7,14 +7,14 @@ import { getAllCharactersByPage } from "../services/rickMortyApi.ts";
 
 const characters = await getAllCharactersByPage();
 
-const urlGen = (page:number)=>{
-  return `/personajes?page=${page}`
-}
+const urlGen = (page: number) => {
+  return `/personajes?page=${page}`;
+};
 ---
 
 <Layout title="Personajes">
   <main>
-    <Paginador current={1} maxPage={42} sizeCenterLinks={3} urlGen={urlGen}/>
+    <Paginador current={42} maxPage={42} sizeCenterLinks={3} urlGen={urlGen} />
     <div id="cards-container">
       {
         characters.map(
@@ -47,14 +47,13 @@ const urlGen = (page:number)=>{
   </main>
 </Layout>
 <style>
-  
-  #cards-container{
+  #cards-container {
     display: grid;
     grid-template-columns: repeat(2, 600px);
     justify-items: center;
     justify-content: center;
     gap: 24px;
     margin-top: 60px;
-    margin-bottom: 30px
+    margin-bottom: 30px;
   }
 </style>
