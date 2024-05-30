@@ -1,6 +1,7 @@
 ---
 import PaginadorArrow from "./PaginadorArrow.astro";
 import Separador from "./Separador.astro";
+import EnlacePage from "./EnlacePage.astro";
 
 interface Props {
   current: number;
@@ -61,45 +62,25 @@ const next = current + 1;
 <div class="paginador-container">
   <PaginadorArrow url={urlGen(prev)} disable={isFirstPage} type="LEFT" />
 
-  {
-    isActiveFirstPage && (
-      <a href={urlGen(1)} class="selectable">
-        1
-      </a>
-    )
-  }
+  {isActiveFirstPage && <EnlacePage url={urlGen(1)} value={1} />}
   <Separador active={isActiveFirstSeparator} />
   <div class="center">
     {
       prevPages.map((page) => {
-        return (
-          <a href={urlGen(page)} class="selectable">
-            {page}
-          </a>
-        );
+        return <EnlacePage url={urlGen(page)} value={page} />;
       })
     }
-    <span class="active">{current}</span>
+    <EnlacePage url={urlGen(current)} value={current} active={true} />
     {
       afterPages.map((page) => {
-        return (
-          <a href={urlGen(page)} class="selectable">
-            {page}
-          </a>
-        );
+        return <EnlacePage url={urlGen(page)} value={page} />;
       })
     }
   </div>
 
   <Separador active={isActiveLastSeparator} />
-  
-  {
-    isActiveAfterPages && (
-      <a href={urlGen(maxPage)} class="selectable">
-        {maxPage}
-      </a>
-    )
-  }
+
+  {isActiveAfterPages && <EnlacePage url={urlGen(maxPage)} value={maxPage} />}
 
   <PaginadorArrow url={urlGen(next)} disable={isLastPage} type="RIGHT" />
 </div>
@@ -116,27 +97,5 @@ const next = current + 1;
     display: flex;
     flex-direction: row;
     gap: 8px;
-  }
-  a,
-  .active {
-    height: 30px;
-    width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-  }
-
-  .separador {
-    height: 40px;
-    width: 40px;
-  }
-
-  .selectable:hover {
-    background-color: #444444;
-  }
-
-  .active {
-    background: #308941;
   }
 </style>

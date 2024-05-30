@@ -1,0 +1,37 @@
+---
+interface Props{
+  active?: boolean | 'true' | 'false';
+  url: string;
+  value: number;
+}
+
+const {active, url, value}= Astro.props
+
+---
+{
+  active ? (
+  <span class="active">{value}</span>
+  ) :(
+  <a href={url} class="selectable">{value}</a>
+  )
+}
+
+<style>  
+ a,
+  .active {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .selectable:hover {
+    background-color: #444444;
+  }
+
+  .active {
+    background: #308941;
+  }
+</style>
