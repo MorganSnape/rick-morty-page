@@ -7,9 +7,9 @@ interface Props {
 
 const { url, disable, type } = Astro.props;
 ---
+
 <!-- Primero pregunta es disable ? si es true muestra la etiqueta spam si es false muestra el ancore
-Luego de esa pregunta, valida, es type LEFT si es true muestra el primer svg y si es false muestra la segunda opción -->
-{
+Luego de esa pregunta, valida, es type LEFT si es true muestra el primer svg y si es false muestra la segunda opción -->{
   disable ? (
     <span class="selectable disable">
       {type === "LEFT" ? (
@@ -56,6 +56,8 @@ Luego de esa pregunta, valida, es type LEFT si es true muestra el primer svg y s
     fill: rgb(83, 83, 83);
   }
 
+  /* :not() funciona que cualquier elemento con la clase selectable pero 
+  que no tenga la clase disable se le aplique el siguiente cambio */
   .selectable:not(.disable) {
     fill: white;
 
