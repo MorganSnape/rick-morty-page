@@ -1,4 +1,4 @@
----
+<!-- ---
 import PaginadorArrow from "./PaginadorArrow.astro";
 import Separador from "./Separador.astro";
 import EnlacePage from "./EnlacePage.astro";
@@ -9,72 +9,59 @@ interface Props {
   sizeCenterLinks?: number;
   urlGen: (page: number) => string;
 }
- /* En base a currect la pagina activa es genera la cantidad de numeros al rededor 3 4 5 {6} 7 8 9*/
-function computeCenterLinks(
-  current: number,
-  size: number,
-  max: number
-): number[][] {
-  let arr1: number[] = [];
-  let arr2: number[] = [];
 
-  for (let i = 1; i <= size; i++) {
-    const resta = current - i;
-    arr1.unshift(resta);
+function paginadorList(size: number, maxN: number, current: number) {
+  let list = [];
+  let centro = [];
+  const stopM = maxN + 2 - size
+  
+  if (current <= size - 2) {
+    centro.push(current);
+    list.push("---");
+    list.push(maxN);
+    
+    for (let i = 1; list.length + centro.length < size; i++) {
+    centro.push(current + i);
   }
+    
+    
+  }if (current > stopM) {
+    list.push(1);
+    list.push("---");
+    centro.push(current);
+    list.splice(2, 0, centro);
 
-  arr1 = arr1.filter((page) => page >= 1);
-
-  for (let i = 1; i <= size; i++) {
-    const suma = current + i;
-    arr2.push(suma);
+  } else {
+    list.push(1);
+    list.push("---");
+    centro.push(current);
+    list.push("---");
+    list.push(maxN);
+    list.splice(2, 0, centro);
   }
+  
+  list.splice(0, 0, centro);      
 
-  console.log(arr2);
-  arr2 = arr2.filter((page) => page <= max);
-
-  return [arr1, arr2];
+  for (let i = 1; (list.length + centro.length)<=size; i++) {
+    centro.unshift(current - i);
+    centro.push(current + i);
+  }
+  return [list];
 }
-
-const { current, maxPage, sizeCenterLinks, urlGen } = Astro.props;
-
-const centerLinks = sizeCenterLinks || 1;
-
-const [prevPages, afterPages] = computeCenterLinks(
-  current,
-  centerLinks,
-  maxPage
-);
-
-const isActiveFirstPage: boolean = current - centerLinks > 1;
-const isActiveFirstSeparator: boolean = current - centerLinks > 2;
-
-const isActiveAfterPages: boolean = maxPage - current > centerLinks;
-const isActiveLastSeparator: boolean = maxPage - current > centerLinks + 1;
-
-const isFirstPage = current === 1;
-const isLastPage = current === maxPage;
-
-const prev = current - 1;
-const next = current + 1;
 ---
 
 <div class="paginador-container">
   <PaginadorArrow url={urlGen(prev)} disable={isFirstPage} type="LEFT" />
 
   {isActiveFirstPage && <EnlacePage url={urlGen(1)} value={1} />}
-
   <Separador active={isActiveFirstSeparator} />
-
   <div class="center">
     {
-      prevPages.map((page) =>{ 
+      prevPages.map((page) => {
         return <EnlacePage url={urlGen(page)} value={page} />;
       })
     }
-
     <EnlacePage url={urlGen(current)} value={current} active={true} />
-
     {
       afterPages.map((page) => {
         return <EnlacePage url={urlGen(page)} value={page} />;
@@ -102,4 +89,4 @@ const next = current + 1;
     flex-direction: row;
     gap: 8px;
   }
-</style>
+</style> -->

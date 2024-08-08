@@ -6,7 +6,7 @@ import Paginador from "../components/Paginador/Paginador.astro";
 import { getAllCharactersByPage } from "../services/rickMortyApi.ts";
 
 const characters = await getAllCharactersByPage();
-
+  
 const urlGen = (page: number) => {
   return `/personajes?page=${page}`;
 };
@@ -14,7 +14,7 @@ const urlGen = (page: number) => {
 
 <Layout title="Personajes">
   <main>
-    <Paginador current={12} maxPage={42} sizeCenterLinks={3} urlGen={urlGen} />
+    <!-- <PaginadorV2 urlGen={urlGen} current={6} maxPage={42}/> -->
     <div id="cards-container">
       {
         characters.map(
@@ -44,6 +44,7 @@ const urlGen = (page: number) => {
         )
       }
     </div>
+    <Paginador current={1} maxPage={42} sizeCenterLinks={3} urlGen={urlGen} />
   </main>
 </Layout>
 <style>

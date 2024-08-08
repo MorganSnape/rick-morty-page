@@ -5,7 +5,13 @@ interface Props{
   value: number;
 }
 
-const {active, url, value}= Astro.props
+let {active, url, value}= Astro.props
+
+if(active){
+  // if(active === 'false')
+  //   active = false
+  active = active === 'false' ? false : active;
+}
 
 ---
 {
